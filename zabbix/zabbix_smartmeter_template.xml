@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.0</version>
+    <date>2023-12-25T12:00:00Z</date>
+    <groups>
+        <group>
+            <uuid>82531070505b4d729046028882756858</uuid>
+            <name>Templates/Smartmeter Project</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>0364d262145348879555138138981442</uuid>
+            <template>Template Smartmeter</template>
+            <name>Template Smartmeter</name>
+            <groups>
+                <group>
+                    <name>Templates/Smartmeter Project</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>50320482592446758661730044521463</uuid>
+                    <name>Smartmeter Raw Data</name>
+                    <key>smartmeter.get[{$SMARTMETER.DEVICE},{$SMARTMETER.ID},{$SMARTMETER.PASSWORD},{$SMARTMETER.CHANNEL},{$SMARTMETER.IP}]</key>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>JSON raw data from smartmeter</description>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>smartmeter</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>96614458316248389642055621441864</uuid>
+                    <name>Instantaneous Power</name>
+                    <type>DEPENDENT</type>
+                    <key>smartmeter.power</key>
+                    <delay>0</delay>
+                    <history>90d</history>
+                    <units>W</units>
+                    <description>瞬時電力計測値</description>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.value</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>smartmeter.get[{$SMARTMETER.DEVICE},{$SMARTMETER.ID},{$SMARTMETER.PASSWORD},{$SMARTMETER.CHANNEL},{$SMARTMETER.IP}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>power</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>40866504229344168015509922003661</uuid>
+                    <name>Current R</name>
+                    <type>DEPENDENT</type>
+                    <key>smartmeter.current.r</key>
+                    <delay>0</delay>
+                    <history>90d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>R相電流</description>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.r</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>smartmeter.get[{$SMARTMETER.DEVICE},{$SMARTMETER.ID},{$SMARTMETER.PASSWORD},{$SMARTMETER.CHANNEL},{$SMARTMETER.IP}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>current</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>15016503080546118491626084661005</uuid>
+                    <name>Current T</name>
+                    <type>DEPENDENT</type>
+                    <key>smartmeter.current.t</key>
+                    <delay>0</delay>
+                    <history>90d</history>
+                    <value_type>FLOAT</value_type>
+                    <units>A</units>
+                    <description>T相電流</description>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.t</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>smartmeter.get[{$SMARTMETER.DEVICE},{$SMARTMETER.ID},{$SMARTMETER.PASSWORD},{$SMARTMETER.CHANNEL},{$SMARTMETER.IP}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>component</tag>
+                            <value>current</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$SMARTMETER.CHANNEL}</macro>
+                    <description>Wi-SUN Channel</description>
+                </macro>
+                <macro>
+                    <macro>{$SMARTMETER.DEVICE}</macro>
+                    <value>/dev/ttyUSB0</value>
+                    <description>Serial Device Path</description>
+                </macro>
+                <macro>
+                    <macro>{$SMARTMETER.ID}</macro>
+                    <description>B-Route ID</description>
+                </macro>
+                <macro>
+                    <macro>{$SMARTMETER.IP}</macro>
+                    <description>Smartmeter IPv6 Address</description>
+                </macro>
+                <macro>
+                    <macro>{$SMARTMETER.PASSWORD}</macro>
+                    <type>SECRET_TEXT</type>
+                    <description>B-Route Password</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>

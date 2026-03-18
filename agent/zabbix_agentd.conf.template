@@ -1,0 +1,12 @@
+PidFile=/tmp/zabbix_agentd.pid
+LogType=console
+Server=${ZABBIX_SERVER}
+ServerActive=${ZABBIX_SERVER_ACTIVE}
+Hostname=${ZABBIX_HOSTNAME}
+ListenPort=${ZABBIX_AGENT_LISTEN_PORT}
+ListenIP=${ZABBIX_AGENT_LISTEN_IP}
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
+Timeout=20
+UnsafeUserParameters=1
+EnableRemoteCommands=1
+

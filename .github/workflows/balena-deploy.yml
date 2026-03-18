@@ -1,0 +1,38 @@
+name: Deploy to balenaCloud
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/balena-deploy.yml"
+      - "agent/**"
+      - "docker-compose.yml"
+      - "balena.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install balena CLI
+        run: npm install --global balena-cli
+
+      - name: Login to balenaCloud
+        env:
+          BALENA_API_TOKEN: ${{ secrets.BALENA_API_TOKEN }}
+        run: balena login --token "${BALENA_API_TOKEN}"
+
+      - name: Push release to fleet
+        run: balena push gh_serkenn/pi-wi-sun --source .
+

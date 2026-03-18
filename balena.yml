@@ -1,0 +1,11 @@
+name: pi-wi-sun
+type: sw.application
+description: >-
+  Raspberry Pi 3 (using 64bit OS) / balenaCloud 向けの Wi-SUN スマートメーター
+  監視アプリケーション。Zabbix Agent と zabbix-smartmeter を組み合わせて動作する。
+version: 0.1.0
+data:
+  defaultDeviceType: raspberrypi3-64
+  supportedDeviceTypes:
+    - raspberrypi3-64
+

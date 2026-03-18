@@ -1,0 +1,16 @@
+version: "2.1"
+
+services:
+  agent:
+    build: ./agent
+    network_mode: host
+    privileged: true
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      ZABBIX_HOSTNAME: pi-wi-sun
+      SMARTMETER_SERIAL_DEVICE: /dev/ttyUSB0
+      SMARTMETER_DSE: "true"
+      SMARTMETER_CACHE_TTL: "5"
+      SMARTMETER_VERBOSITY: "1"
+
